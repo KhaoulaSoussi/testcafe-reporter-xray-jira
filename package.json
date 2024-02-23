@@ -1,11 +1,14 @@
 {
-  "name": "testcafe-reporter-xray-jira",
-  "version": "1.1.2-unstable",
+  "name": "@KhaoulaSoussi/testcafe-reporter-xray-jira",
+  "version": "1.1.1",
   "description": "xray-jira TestCafe reporter plugin.",
-  "repository": "https://github.com/Vooha-QualiTlabs/testcafe-reporter-xray-jira",
+  "repository": "git@github.com:KhaoulaSoussi/testcafe-reporter-xray-jira.git",
   "author": {
     "name": "VoohaN",
     "email": "50583330+VoohaN@users.noreply.github.com"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "main": "lib/index",
   "files": [
