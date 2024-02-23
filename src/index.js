@@ -29,7 +29,28 @@ module.exports = function () {
             date = startTime.toString().split(' ');
             browser = userAgents[0].split(' ')[0];
             os = userAgents[0].split('/')[1];
-           
+
+            // Create Test Execution
+            if (os.includes('mac') || os.includes('OS X')) {
+                osType = 'Mac';
+                env = `${browser}`;
+            }
+            else if (os.includes('Windows')) {
+                osType = 'Windows';
+                env = `${browser}`;
+            }
+            else if (os.includes('iOS') || os.includes('Android')) {
+                var deviceName = process.env['MOBILE_DEVICE_NAME'];
+
+                osType = os.includes('iOS') ? 'ios' : 'android';
+                env = `${deviceName} ${browser}`;
+            }
+            else env = `${browser}`;
+
+            const day = `${date[1]}-${date[2]}-${date[3]} ${date[4]}`;
+
+            executionId = await xray.createTestExecution(osType, env, day);
+
             // write to console
             this.setIndent(1)
                 .useWordWrap(true)
@@ -54,27 +75,6 @@ module.exports = function () {
         async reportTestStart (/* name, meta */) {},
 
         async reportTestDone (name, testRunInfo, meta) {
-            // Create Test Execution
-            if (os.includes('mac') || os.includes('OS X')) {
-                osType = 'Mac';
-                env = `${osType} ${browser}`;
-            }
-            else if (os.includes('Windows')) {
-                osType = 'Windows';
-                env = `${osType} ${browser}`;
-            }
-            else if (os.includes('ios') || os.includes('android')) {
-                var deviceName = process.env['MOBILE_DEVICE_NAME'];
-
-                osType = os.includes('iOS') ? 'ios' : 'android';
-                env = `${deviceName} ${browser}`;
-            }
-            else env = `${os} ${browser}`;
-
-            const day = `${date[1]}-${date[2]}-${date[3]}`;
-
-            executionId = await xray.createTestExecution(osType, env, day);
-
             // write the test run info to the console
             var hasErr = !!testRunInfo.errs.length;
             var symbol = null;
@@ -114,7 +114,6 @@ module.exports = function () {
             this.afterErrorList = hasErr;
 
             this.newline();
-            
             // export to xray
             const errors = testRunInfo.errs;
             const hasErrors = !!errors.length;
@@ -123,8 +122,6 @@ module.exports = function () {
             // Get JIRA issue Id for the Test
             const testKey = name.split(' ')[0];
             const testIssueId = await xray.getIssueId(testKey);
-
-            // Get Test Run Id for the Test in Test Execution
             var getTestRunData = await xray.getTestRun(
                 testIssueId,
                 executionId
