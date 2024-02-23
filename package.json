@@ -1,6 +1,6 @@
 {
-  "name": "@KhaoulaSoussi/testcafe-reporter-xray-jira",
-  "version": "1.1.1",
+  "name": "testcafe-reporter-xray-jira",
+  "version": "1.1.2",
   "description": "xray-jira TestCafe reporter plugin.",
   "repository": "git@github.com:KhaoulaSoussi/testcafe-reporter-xray-jira.git",
   "author": {
@@ -27,7 +27,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.3.4",
+    "@babel/core": "^7.23.9",
     "@babel/plugin-transform-runtime": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "babel-eslint": "^10.0.1",
